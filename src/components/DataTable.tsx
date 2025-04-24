@@ -24,6 +24,9 @@ import {
   Edit,
   MoreVerticalIcon,
   Trash,
+  CheckCircle2,
+  Clock,
+  XCircle,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -32,7 +35,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import React from "react";
-import { ScrollArea } from "./ui/scroll-area";
+import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 
 interface TableHeader {
   key: string;
@@ -49,6 +52,38 @@ interface TableProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onDelete?: (row: any) => void;
 }
+
+const getStatusConfig = (status: string) => {
+  const statusLower = status?.toLowerCase();
+  switch (statusLower) {
+    case "active":
+    case "approved":
+      return {
+        icon: CheckCircle2,
+        bg: "bg-green-100",
+        text: "text-green-700",
+        border: "border-green-100",
+        iconColor: "text-green-700",
+      };
+    case "pending":
+    case "in progress":
+      return {
+        icon: Clock,
+        bg: "bg-yellow-100",
+        text: "text-yellow-700",
+        border: "border-yellow-100",
+        iconColor: "text-yellow-700",
+      };
+    default:
+      return {
+        icon: XCircle,
+        bg: "bg-red-100",
+        text: "text-red-700",
+        border: "border-red-100",
+        iconColor: "text-red-700",
+      };
+  }
+};
 
 const DataTable: FC<TableProps> = ({
   headers = [],
@@ -70,20 +105,23 @@ const DataTable: FC<TableProps> = ({
     const value = row[header.key];
 
     switch (header.key) {
-      case "status":
+      case "status": {
+        const config = getStatusConfig(value);
+        const Icon = config.icon;
         return (
           <span
-            className={`px-3 py-1 rounded-full ${
-              value?.toLowerCase() === "active"
-                ? "bg-green-100 text-green-800"
-                : value?.toLowerCase() === "pending"
-                ? "bg-yellow-100 text-yellow-800"
-                : "bg-red-100 text-red-800"
-            }`}
+            className={`
+              inline-flex items-center gap-1.5 px-3 py-1.5
+              rounded-full text-xs font-medium
+              border ${config.border} ${config.bg} ${config.text}
+              transition-colors duration-150
+            `}
           >
+            <Icon className={`h-3.5 w-3.5 ${config.iconColor}`} />
             {value}
           </span>
         );
+      }
       case "amount":
         return (
           <span className="px-3 py-1 rounded-full bg-gray-100">
@@ -96,9 +134,9 @@ const DataTable: FC<TableProps> = ({
   };
 
   return (
+   
     <div className="space-y-4 ">
       <ScrollArea className={`w-[${width}] rounded-md border bg-white shadow-sm overflow-hidden`}>
-   
         <Table className="min-w-full align-middle">
           <TableHeader className="bg-gray-100">
             <TableRow className="border-b border-gray-200 bg-gray-50">
@@ -185,6 +223,10 @@ const DataTable: FC<TableProps> = ({
             )}
           </TableBody>
         </Table>
+        <ScrollBar 
+      orientation="horizontal" 
+      className="opacity-0 hover:opacity-100 transition-opacity"
+    />
       </ScrollArea>
 
 
