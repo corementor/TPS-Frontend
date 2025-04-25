@@ -134,21 +134,22 @@ const DataTable: FC<TableProps> = ({
   };
 
   return (
-   
     <div className="space-y-4 ">
-      <ScrollArea className={`w-[${width}] rounded-md border bg-white shadow-sm overflow-hidden`}>
+      <ScrollArea
+        className={`w-[${width}] rounded-md border bg-white shadow-none overflow-hidden`}
+      >
         <Table className="min-w-full align-middle">
-          <TableHeader className="bg-gray-100">
-            <TableRow className="border-b border-gray-200 bg-gray-50">
+          <TableHeader className="">
+            <TableRow className="border-b border-gray-200 bg-[#f6f8fc]">
               {headers.map((header, index) => (
                 <TableHead
                   key={index}
-                  className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider"
                 >
                   {header.display}
                 </TableHead>
               ))}
-              <TableHead className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <TableHead className="px-4 py-3 text-right text-xs font-bold text-gray-700 uppercase tracking-wider">
                 Actions
               </TableHead>
             </TableRow>
@@ -159,7 +160,7 @@ const DataTable: FC<TableProps> = ({
               <TableRow>
                 <TableCell
                   colSpan={headers.length + 1}
-                  className="h-32 text-center text-gray-500 bg-gray-50/50"
+                  className="h-32 text-center text-gray-500"
                 >
                   <div className="flex flex-col items-center justify-center">
                     <p className="text-sm font-medium">No results found</p>
@@ -173,17 +174,17 @@ const DataTable: FC<TableProps> = ({
               paginatedRows.map((row, rowIndex) => (
                 <TableRow
                   key={rowIndex}
-                  className="hover:bg-gray-50/50 transition-colors"
+                  className="hover:shadow-lg transition-colors cursor-pointer hover:bg-white"
                 >
                   {headers.map((header, cellIndex) => (
                     <TableCell
                       key={cellIndex}
-                      className="px-4 py-3 text-sm text-gray-600 border-b border-gray-100"
+                      className="px-4 py-3 text-sm text-gray-600 border-b border-gray-100 "
                     >
                       {renderCellContent(header, row)}
                     </TableCell>
                   ))}
-                  <TableCell className="px-4 py-3 text-right border-b border-gray-100">
+                  <TableCell className="px-4 py-3 text-right border-b border-gray-100 ">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button
@@ -223,16 +224,21 @@ const DataTable: FC<TableProps> = ({
             )}
           </TableBody>
         </Table>
-        <ScrollBar 
-      orientation="horizontal" 
-      className="opacity-0 hover:opacity-100 transition-opacity"
-    />
+        <ScrollBar
+          orientation="horizontal"
+          className="opacity-0 hover:opacity-100 transition-opacity"
+        />
       </ScrollArea>
-
 
       <div className="flex items-center justify-between px-2 px-4 py-0 border-gray-200 ">
         <div className="flex items-center gap-3">
-          <Label htmlFor="per-page" className="text-sm text-gray-500 font-medium"> Rows per page</Label>
+          <Label
+            htmlFor="per-page"
+            className="text-sm text-gray-500 font-medium"
+          >
+            {" "}
+            Rows per page
+          </Label>
           <Select
             value={pageSize.toString()}
             onValueChange={(value) => {
@@ -240,7 +246,7 @@ const DataTable: FC<TableProps> = ({
               setCurrentPage(0);
             }}
           >
-            <SelectTrigger className="h-8 w-[70px] text-sm">
+            <SelectTrigger className="h-8 w-[70px] text-sm shadow-none">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -255,6 +261,7 @@ const DataTable: FC<TableProps> = ({
 
         <div className="flex items-center gap-3">
           <Button
+            className="shadow-none cursor-pointer"
             variant="outline"
             size="sm"
             onClick={() => setCurrentPage(0)}
@@ -263,11 +270,12 @@ const DataTable: FC<TableProps> = ({
             <ChevronsLeftIcon className="h-4 w-4" />
           </Button>
           <Button
+          
             variant="outline"
             size="sm"
             onClick={() => setCurrentPage(currentPage - 1)}
             disabled={currentPage === 0}
-            className="h-8 w-8 p-0"
+            className="h-8 w-8 p-0 shadow-none cursor-pointer"
           >
             <ChevronLeftIcon className="h-4 w-4" />
           </Button>
@@ -279,7 +287,7 @@ const DataTable: FC<TableProps> = ({
             size="sm"
             onClick={() => setCurrentPage(currentPage + 1)}
             disabled={currentPage === totalPages - 1}
-             className="h-8 w-8 p-0"
+            className="h-8 w-8 p-0 shadow-none cursor-pointer"
           >
             <ChevronRightIcon className="h-4 w-4" />
           </Button>
@@ -288,7 +296,7 @@ const DataTable: FC<TableProps> = ({
             size="sm"
             onClick={() => setCurrentPage(totalPages - 1)}
             disabled={currentPage === totalPages - 1}
-            className="h-8 w-8 p-0"
+            className="h-8 w-8 p-0 shadow-none cursor-pointer"
           >
             <ChevronsRightIcon className="h-4 w-4" />
           </Button>

@@ -37,8 +37,10 @@ const generateRows = (count: number) => {
 
   return Array.from({ length: count }, (_, index) => {
     const baseRow = baseRows[index % baseRows.length];
-    const month = new Date(2023, (index % 12), 1).toLocaleString('default', { month: 'long' });
-    
+    const month = new Date(2023, index % 12, 1).toLocaleString("default", {
+      month: "long",
+    });
+
     return {
       slNo: index + 1,
       documentNo: `${43919934 + index}`,
@@ -78,23 +80,27 @@ const TaxDeclarationPage = () => {
       <div className="flex justify-between items-center ">
         <div>
           <h1 className="text-2xl font-bold text-gray-600">Tax Declaration</h1>
-        
         </div>
-        <div className="flex-1 flex items-center justify-center gap-4 ">
+        <div className="flex-1 flex items-center justify-center gap-4">
           <div className="relative w-96">
-            <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
             <Input
-              placeholder="Search..."
-              className="pl-8 w-full h-9 bg-transparent"
+              placeholder="Search tax declarations..."
+              className="pl-10 h-10  rounded-lg shadow-none text-sm text-gray-600 
+              placeholder:text-gray-400 focus:ring-2 focus:ring-primary/20 focus:border-primary 
+              hover:border-gray-300 transition-colors"
             />
           </div>
         </div>
         <div className="flex items-center gap-4">
-          <Button className="cursor-pointer" onClick={() => setOpen(true)}>
+          <Button
+            className="cursor-pointer text-white"
+            onClick={() => setOpen(true)}
+          >
             <Plus className="h-4 w-4 " />
             Enter Declaration
           </Button>
-          <Button className="cursor-pointer">
+          <Button className="cursor-pointer text-white">
             <Upload className="h-4 w-4 " />
             Upload Annexures
           </Button>
@@ -102,9 +108,8 @@ const TaxDeclarationPage = () => {
       </div>
 
       <div className="mt-6">
-     
         <DataTable headers={headers} rows={rows} />
-        <TaxDeclarationMenu open={open} setOpen={setOpen}/>
+        <TaxDeclarationMenu open={open} setOpen={setOpen} />
       </div>
     </div>
   );

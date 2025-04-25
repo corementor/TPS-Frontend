@@ -25,6 +25,7 @@ import { XCircle } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { object, string, z } from "zod";
+import { showToast } from "@/components/ShowToast";
 
 const formSchema = object({
   type: string({
@@ -102,7 +103,7 @@ const TaxDeclarationMenu = ({
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger className="w-full h-10">
+                        <SelectTrigger className="w-full h-10 shadow-none cursor-pointer">
                           {" "}
                           {/* Added full width and height */}
                           <SelectValue placeholder="Select declaration type" />
@@ -129,7 +130,7 @@ const TaxDeclarationMenu = ({
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger className="w-full h-10">
+                        <SelectTrigger className="w-full h-10 shadow-none cursor-pointer">
                           {" "}
                           {/* Added full width and height */}
                           <SelectValue placeholder="Select tax year" />
@@ -159,7 +160,7 @@ const TaxDeclarationMenu = ({
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger className="w-full h-10">
+                        <SelectTrigger className="w-full shadow-none cursor-pointer">
                           {" "}
                           {/* Added full width and height */}
                           <SelectValue placeholder="Select tax type" />
@@ -189,7 +190,9 @@ const TaxDeclarationMenu = ({
                 >
                   Cancel
                 </Button>
-                <Button type="submit" className="cursor-pointer">
+                <Button type="submit" className="cursor-pointer text-white" onClick={() => showToast.success(
+                "Tax declaration Successful!",
+                "Your business tax declaration has been submitted successfully.")}>
                   Submit
                 </Button>
               </div>
